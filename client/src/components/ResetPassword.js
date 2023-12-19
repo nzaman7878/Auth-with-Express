@@ -2,58 +2,44 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
-// ResetPassword component definition
 function ResetPassword() {
-  // Getting parameters from the URL using useParams hook
-  const { resetPasswordToken } = useParams();
-  // Hook to navigate between routes
   const navigate = useNavigate();
-
-  // State to manage loading state
+  const { resetPasswordToken } = useParams();
   const [loading, setLoading] = useState(false);
-
-  // State to manage password input values
   const [password, setPassword] = useState({
     password: "",
     confirmPassword: ""
   });
 
-  // API URL
   const URL = process.env.REACT_APP_URL;
-
-  // Function to handle password reset submission
   async function handleResetPassword(e) {
-    e.preventDefault(); // Prevent the default behavior of an HTML form submission
+    e.preventDefault(); // event.preventDefault() method to prevent the default behavior of an HTML form submission
     setLoading(true);
     try {
-      // Making a POST request to the server to reset the password
       const response = await axios({
         method: "post",
         url: URL + "/api/auth/resetpassword/" + resetPasswordToken,
         data: password
       });
 
-      // If the reset is successful, show a success message and navigate to the signin page
       if (response.data.success) {
         alert(response.data.message);
         navigate("/signin");
       }
       setLoading(false);
     } catch (error) {
-      // If there is an error, show an alert with the error message
       alert(error.response.data.message);
       setLoading(false);
     }
   }
 
-  // JSX for the ResetPassword component
   return (
     <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 m-4">
       <form className="space-y-6" onSubmit={(e) => handleResetPassword(e)}>
         <h5 className="text-xl font-medium text-gray-900 dark:text-white">
           Reset Password
         </h5>
-        {/* Password input */}
+        {/* password */}
         <div>
           <label
             htmlFor="password"
@@ -75,8 +61,8 @@ function ResetPassword() {
             }
           />
         </div>
-        {/* Password input end */}
-        {/* Confirm password input */}
+        {/* password end */}
+        {/* confirm  password */}
         <div>
           <label
             htmlFor="confirmPassword"
@@ -98,14 +84,14 @@ function ResetPassword() {
             }
           />
         </div>
-        {/* Confirm password input end */}
-        {/* Submit button */}
+        {/* conform password end */}
+        {/*  signIn button  */}
         <button
           type="submit"
           className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           Reset password
-          {/* Loading spinner */}
+          {/* loading */}
           {loading ? (
             <svg
               aria-hidden="true"
@@ -125,11 +111,11 @@ function ResetPassword() {
               />
             </svg>
           ) : null}
-          {/* Loading spinner end */}
+          {/* loading end */}
         </button>
-        {/* Submit button end */}
+        {/* signIn button end */}
 
-        {/* Link to Sign In page */}
+        {/* signIn  */}
         <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
           Go to{" "}
           <Link
@@ -140,11 +126,10 @@ function ResetPassword() {
           </Link>{" "}
           page
         </div>
-        {/* Link to Sign In page end */}
+        {/* singIn */}
       </form>
     </div>
   );
 }
 
-// Exporting the ResetPassword component
 export default ResetPassword;

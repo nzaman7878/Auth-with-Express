@@ -2,53 +2,40 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
-// SignIn component definition
 function SignIn() {
-  // Hook to navigate between routes
   const navigate = useNavigate();
 
-  // State to manage loading state
   const [loading, setLoading] = useState(false);
-
-  // State to manage email and password input values
   const [credentials, setCredentials] = useState({ email: "", password: "" });
-
-  // API URL
   const URL = process.env.REACT_APP_URL;
 
-  // Function to handle sign-in submission
   async function handleSignIn(e) {
-    e.preventDefault(); // Prevent the default behavior of an HTML form submission
+    e.preventDefault(); // event.preventDefault() method to prevent the default behavior of an HTML form submission
     setLoading(true);
     try {
-      // Making a POST request to the server for sign-in
       const response = await axios({
         method: "post",
         url: URL + "/api/auth/signin",
         withCredentials: true,
         data: credentials
       });
-
-      // If sign-in is successful, navigate to the home page
       if (response.data.success) {
         navigate("/");
       }
       setLoading(false);
     } catch (error) {
-      // If there is an error, show an alert with the error message
       alert(error.response.data.message);
       setLoading(false);
     }
   }
 
-  // JSX for the SignIn component
   return (
     <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 m-4">
       <form className="space-y-6" onSubmit={(e) => handleSignIn(e)}>
         <h5 className="text-xl font-medium text-gray-900 dark:text-white">
           Signin to our platform
         </h5>
-        {/* Email input */}
+        {/* email  */}
         <div>
           <label
             htmlFor="email"
@@ -69,8 +56,8 @@ function SignIn() {
             }
           />
         </div>
-        {/* Email input end */}
-        {/* Password input */}
+        {/* email end */}
+        {/* password */}
         <div>
           <label
             htmlFor="password"
@@ -92,9 +79,9 @@ function SignIn() {
             }
           />
         </div>
-        {/* Password input end */}
+        {/* password end */}
 
-        {/* Forgot Password link */}
+        {/*  forgot-password */}
         <div className="flex items-start">
           <Link
             to="/forgot-password"
@@ -103,15 +90,15 @@ function SignIn() {
             Forgot Password?
           </Link>
         </div>
-        {/* Forgot Password link end */}
+        {/* forgot-Password */}
 
-        {/* Sign In button */}
+        {/*  signIn button  */}
         <button
           type="submit"
           className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           Login to your account
-          {/* Loading spinner */}
+          {/* loading */}
           {loading ? (
             <svg
               aria-hidden="true"
@@ -131,11 +118,11 @@ function SignIn() {
               />
             </svg>
           ) : null}
-          {/* Loading spinner end */}
+          {/* loading end */}
         </button>
-        {/* Sign In button end */}
+        {/* signIn button end */}
 
-        {/* Create account link */}
+        {/* create account(signup) */}
         <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
           Not registered?{" "}
           <Link
@@ -145,11 +132,10 @@ function SignIn() {
             Create account
           </Link>
         </div>
-        {/* Create account link end */}
+        {/* create account(signup) end */}
       </form>
     </div>
   );
 }
 
-// Exporting the SignIn component
 export default SignIn;

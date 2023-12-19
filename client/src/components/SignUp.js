@@ -1,33 +1,22 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-
-// SignUp component definition
 function SignUp() {
-  // Hook to navigate between routes
   const navigate = useNavigate();
-
-  // State to manage loading state
   const [loading, setLoading] = useState(false);
-
-  // State to manage user data (name, email, password, confirmPassword)
   const [userData, setUserData] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: ""
   });
-
-  // API URL
   const URL = process.env.REACT_APP_URL;
 
-  // Function to handle sign-up submission
   async function handleSignUp(e) {
-    e.preventDefault(); // Prevent the default behavior of an HTML form submission
+    e.preventDefault(); // event.preventDefault() method to prevent the default behavior of an HTML form submission
 
     setLoading(true);
     try {
-      // Making a POST request to the server for sign-up
       const response = await axios({
         method: "post",
         url: URL + "/api/auth/signup",
@@ -35,19 +24,17 @@ function SignUp() {
         data: userData
       });
 
-      // If sign-up is successful, navigate to the sign-in page
+      // the withCredentials property to 'true'. This tells the browser to include any cookies associated with the current domain in the request.
       if (response.data.success) {
         navigate("/signin");
       }
       setLoading(false);
     } catch (error) {
-      // If there is an error, show an alert with the error message
       alert(error.response.data.message);
       setLoading(false);
     }
   }
 
-  // JSX for the SignUp component
   return (
     <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 m-4">
       <form className="space-y-6" onSubmit={(e) => handleSignUp(e)}>
@@ -55,7 +42,7 @@ function SignUp() {
           SignUp to our platform
         </h5>
 
-        {/* Name input */}
+        {/* email  */}
         <div className="mb-6">
           <label
             htmlFor="name"
@@ -73,9 +60,9 @@ function SignUp() {
             onChange={(e) => setUserData({ ...userData, name: e.target.value })}
           />
         </div>
-        {/* Name input end */}
+        {/* email end */}
 
-        {/* Email input */}
+        {/* email  */}
         <div className="mb-6">
           <label
             htmlFor="email"
@@ -95,9 +82,9 @@ function SignUp() {
             }
           />
         </div>
-        {/* Email input end */}
+        {/* email end */}
 
-        {/* Password input */}
+        {/* password */}
         <div className="mb-6">
           <label
             htmlFor="password"
@@ -118,9 +105,9 @@ function SignUp() {
             }
           />
         </div>
-        {/* Password input end */}
+        {/* password end */}
 
-        {/* Confirm Password input */}
+        {/* conform password */}
         <div className="mb-6">
           <label
             htmlFor="confirmPassword"
@@ -141,9 +128,9 @@ function SignUp() {
             }
           />
         </div>
-        {/* Confirm Password input end */}
+        {/* conform password end */}
 
-        {/* SignUp button */}
+        {/*  signUp button */}
         <button
           type="submit"
           className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -169,11 +156,11 @@ function SignUp() {
             </svg>
           ) : null}
         </button>
-        {/* SignUp button end */}
+        {/* signUp button end */}
 
-        {/* Sign In link */}
+        {/* create account(signup) */}
         <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
-          Already have an account?{" "}
+          Alerady have an account?{" "}
           <Link
             to="/signin"
             className="text-blue-700 hover:underline dark:text-blue-500"
@@ -181,11 +168,10 @@ function SignUp() {
             Sign In
           </Link>
         </div>
-        {/* Sign In link end */}
+        {/* create account(signup) end */}
       </form>
     </div>
   );
 }
 
-// Exporting the SignUp component
 export default SignUp;
